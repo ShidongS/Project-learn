@@ -1,6 +1,2 @@
 # Project-learn
-The Twitter developer account is now finally ready after several days' trying.
----------------------------------------------------------------------------------------------------------------------
-By many many trials and modifications I finally managed to download pictures from twitter(gary1.py), although this edition is rather primary and may have some bugs in extreme conditions(like if this person has no tweets at all). I am trying to fix it.
--------------------------------------------------------------------------------------
-The gary2.py solves the problem of having no tweet or pictures available problem. (I will keep gary1.py just as a document)
+This project is composed of 3 programs, which are twitter.py, google.py and link.sh. These programs indicate their function by their names, while some of the picture processing and video merging program lies in google.py and link.sh. The way to run this project is to launch the lin.sh in Linux and everything is done. This program would scan 50 tweets and download pictures for now. More functions are being added.
