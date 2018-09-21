@@ -6,3 +6,5 @@ This project is composed of 3 programs, which are twitter.py, google.py and link
 
 
 2018.9.19 update: The way how this project works is as follows: 1. Enable the twitter API by typing in keys. 2. Download tweets from the account to local computer. 3. Scan all these tweets and select tweet url with media files. 4.Download files and save as images(.jpg) to your computer in a certian folder(if there is not, it will create one). 5.Send these images to Google Vision API and get feedback(the Label Library is uesd in this case). 6. Print and save these labels. 7. Resize all images into same size and add all labels to them to create a new series of images. 8. Merge thoes images with labels into one video.
+
+2018.9.20 update: This edition solves the problem of twitter API not responding and PNG cannot transform to JPG problem.
