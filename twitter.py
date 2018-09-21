@@ -6,6 +6,7 @@ import tweepy #https://github.com/tweepy/tweepy
 import json
 import urllib.request
 import os
+from PIL import Image
 
 # Twitter API credentials
 consumer_key = ""
@@ -19,19 +20,24 @@ def get_all_tweets(screen_name):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
     api = tweepy.API(auth)
-    B=int(input('Please input the number of tweets you want to scan(from 20 to 3000):'))
     alltweets = []
     # Make first request of getting tweets, get 10 new tweets and add them to the tweet list
-    new_tweets = api.user_timeline(screen_name = screen_name,count=10)
-    alltweets.extend(new_tweets)                   
+    try:    
+        new_tweets = api.user_timeline(screen_name = screen_name,count=10)
+    except:
+        print('account number not found')  
+        return
+    alltweets.extend(new_tweets)   
     # Prevent some extreme conditions that there is no tweet in this account 
+    B=int(input('Please input the number of tweets you want to scan(from 20 to 3000):'))
+    while(B<20 or B>3000):
+        B=int(input('Number not accepted, please retry:'))
     if(alltweets==[]):
-        print("NO TWEET AT ALL") 
+        print('No tweet found') 
         return 
     oldest = alltweets[-1].id - 1
 
     # Repeat the same progress if the first request is successful
-    # The following 6 line as well as similar code above credit to Prateek Mehta in the twitter example 
     while len(new_tweets) > 0:
         new_tweets = api.user_timeline(screen_name = screen_name,count=10,max_id=oldest)
         alltweets.extend(new_tweets)
@@ -57,7 +63,11 @@ def get_all_tweets(screen_name):
     if not os.path.exists(folder):
         os.makedirs(folder)
     for media_file in media_files:
-        urllib.request.urlretrieve(media_file,folder+'%04d'%(i)+'.jpg')
+        urllib.request.urlretrieve(media_file,folder+'%04d'%(i))
+        img = Image.open(folder+'%04d'%(i))
+        img = img.convert('RGB')
+        img.save(folder+'%04d'%(i)+'.jpg')
+        os.remove(folder+'%04d'%(i))
         i+=1
     print("Downloading finish")
 
