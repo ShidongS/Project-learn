@@ -12,8 +12,11 @@ def google_vision():
     from google.cloud.vision import types
    
     # Instantiates a client
-    client = vision.ImageAnnotatorClient()
-
+    try:
+        client = vision.ImageAnnotatorClient()
+    except:
+        print('Google authentification error')
+        return
     i=0
     # Scan all files in the folder where the images from Twitter are stored
     folder=os.getcwd()+'/picture/'
@@ -29,10 +32,14 @@ def google_vision():
         # Load the image into memory
         # The following 6 line credit to Google quick start
         with io.open(file_name, 'rb') as image_file:
-            content = image_file.read()
+                content = image_file.read()
         image = types.Image(content=content)
         # Run label detection on the image file
-        response = client.label_detection(image=image)
+        try:
+             response = client.label_detection(image=image)
+        except:
+            print('Google API not responding')
+            return
         labels = response.label_annotations
         print('Labels:')
 
